@@ -16,10 +16,6 @@
     <name>JobHunter</name>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>commons</module>
-    </modules>
-
     <licenses>
         <license>
             <name>GNU AFFERO GENERAL PUBLIC LICENSE</name>
