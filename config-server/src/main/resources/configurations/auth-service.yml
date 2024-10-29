@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: auth-service
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+server:
+  port: 8082

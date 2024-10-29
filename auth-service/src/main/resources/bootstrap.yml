@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    config:
+      name: auth-service
+      uri: http://localhost:8888
+      profile: dev
