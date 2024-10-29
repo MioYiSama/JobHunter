@@ -1,0 +1,50 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-micro-services:
+    name: 构建微服务
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 拉取仓库
+        uses: actions/checkout@v4
+
+      - name: 部署 JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: "zulu"
+          java-version: "21"
+
+      - name: 部署 Maven
+        uses: stCarolas/setup-maven@v5
+        with:
+          maven-version: 3.9.9
+
+      - name: 构建 Commons
+        run: mvn -f commons install
+
+      - name: 构建 Eureka Server
+        run: mvn -f user-service package
+
+      - name: 构建 Config Server
+        run: mvn -f user-service package
+
+      - name: 构建 Gateway Server
+        run: mvn -f user-service package
+
+      - name: 构建 User Service
+        run: mvn -f user-service package
+
+      - name: 构建 Auth Service
+        run: mvn -f user-service package
+
+      - name: 上传工件
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            */target/*.jar
