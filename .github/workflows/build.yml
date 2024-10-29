@@ -29,22 +29,46 @@ jobs:
         run: mvn -f commons install
 
       - name: 构建 Eureka Server
-        run: mvn -f user-service package
+        run: mvn -f eureka-server package
+
+      - name: 上传工件 - Eureka Server
+        uses: actions/upload-artifact@v4
+        with:
+          name: eureka-server.jar
+          path: eureka-server/target/eureka-server-*.jar
 
       - name: 构建 Config Server
-        run: mvn -f user-service package
+        run: mvn -f config-server package
+
+      - name: 上传工件 - Config Server
+        uses: actions/upload-artifact@v4
+        with:
+          name: config-server.jar
+          path: config-server/target/config-server-*.jar
 
       - name: 构建 Gateway Server
-        run: mvn -f user-service package
+        run: mvn -f gateway-server package
+
+      - name: 上传工件 - Gateway Server
+        uses: actions/upload-artifact@v4
+        with:
+          name: gateway-server.jar
+          path: gateway-server/target/gateway-server-*.jar
 
       - name: 构建 User Service
         run: mvn -f user-service package
 
-      - name: 构建 Auth Service
-        run: mvn -f user-service package
-
-      - name: 上传工件
+      - name: 上传工件 - User Service
         uses: actions/upload-artifact@v4
         with:
-          path: |
-            */target/*.jar
+          name: user-service.jar
+          path: user-service/target/user-service-*.jar
+
+      - name: 构建 Auth Service
+        run: mvn -f auth-service package
+
+      - name: 上传工件 - Auth Service
+        uses: actions/upload-artifact@v4
+        with:
+          name: auth-service.jar
+          path: auth-service/target/auth-service-*.jar
