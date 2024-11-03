@@ -5,11 +5,15 @@ meta {
 }
 
 get {
-  url: http://127.0.0.1:8082/api/v1/user/?account=admin13
+  url: http://127.0.0.1:8080/api/v1/user/?account=admin13
   body: none
-  auth: none
+  auth: bearer
 }
 
 params:query {
   account: admin13
+}
+
+auth:bearer {
+  token: eyJraWQiOiJteS1rZXktaWQiLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE3MzA3Mjk5OTYsImlhdCI6MTczMDY0MzU5NiwianRpIjoiMjQzODYxODUxODMwNzQ3MTM2IiwiYWNjb3VudCI6ImFkbWluMTE0In0.1iP_RbS32Q0g8MGuMrhLboqDZqZUcmklD9Vu3A2D4s8gd3Ci6_Gs6LWLtbQGgrjq5I3K222eSbBP-sFFW9s5vTmRFBmIgjOf4Dz7i12PPDaMfkDALGmGitHkS4oNIqHTt41EFmzdRzpkg9vJizgAiUSBUJhOB63exM3R1nqYjbufvvUn_rDFc9Zq3eW_pLbd5Fg-HiJiT1lcFzWoD69thBRG9fSzkBrVTKL3oCSceyw3vjyQTnuSuM8ZTPoKgWMWJeOESjKULR9O2lUnX8HLxtQFAo4UN3y2cQRSMSzXqVSdhwKDnaM3hYxeQz9fvt-mP9uG3Tekb5WciYZW7tWBRQ
 }
