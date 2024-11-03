@@ -1,4 +1,4 @@
-package top.mioyi.entities;
+package top.mioyi.types;
 
 import lombok.Getter;
 

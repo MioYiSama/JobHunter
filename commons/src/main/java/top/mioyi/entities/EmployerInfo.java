@@ -3,27 +3,21 @@ package top.mioyi.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
-/**
- * 管理员
- */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Admin {
-    /**
-     * 管理员ID
-     */
+public class EmployerInfo {
+    @NonNull
     private Long id;
 
-    /**
-     * 管理员姓名
-     */
-    private String name;
+    @NonNull
+    private Long employerId;
 
     /**
-     * 管理员密码
+     * 公司名称
      */
-    private String password;
-
+    private String company;
 }

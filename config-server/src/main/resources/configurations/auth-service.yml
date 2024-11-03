@@ -5,5 +5,10 @@ spring:
     openfeign:
       circuitbreaker:
         enabled: true
+  data:
+    redis:
+      username: default
+      password:
+      database: 0
 server:
-  port: 8082
+  port: 8081

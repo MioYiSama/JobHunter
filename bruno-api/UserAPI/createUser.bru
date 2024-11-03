@@ -1,0 +1,20 @@
+meta {
+  name: createUser
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://127.0.0.1:8082/api/v1/user/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Admin1",
+    "account": "admin15",
+    "password": "1",
+    "role": "EMPLOYER"
+  }
+}

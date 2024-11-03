@@ -1,0 +1,25 @@
+meta {
+  name: signup
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://127.0.0.1:8081/api/v1/auth/signup
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Admin3",
+    "account": "admin4",
+    "password": "123456abc",
+    "role": "EMPLOYER"
+  }
+}
+
+body:form-urlencoded {
+  ~account: admin
+  ~password: 123456abc
+}

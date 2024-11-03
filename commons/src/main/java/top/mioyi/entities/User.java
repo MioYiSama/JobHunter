@@ -3,56 +3,37 @@ package top.mioyi.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import top.mioyi.types.Role;
 
-/**
- * 用户
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    /**
-     * 用户ID
-     */
+    @NonNull
     private Long id;
 
     /**
-     * 用户姓名
+     * 用户名
      */
+    @NonNull
     private String name;
 
     /**
-     * 用户密码
+     * 账号
      */
+    @NonNull
+    private String account;
+
+    /**
+     * 密码
+     */
+    @NonNull
     private String password;
 
     /**
-     * 出生年份
+     * 身份
      */
-    private Short birthYear;
-
-    /**
-     * 最低期望工资
-     */
-    private String minExpectedSalary;
-
-    /**
-     * 最高期望工资
-     */
-    private String maxExpectedSalary;
-
-    /**
-     * 最高学历
-     */
-    private Education education;
-
-    /**
-     * 学校
-     */
-    private String school;
-
-    /**
-     * 专业
-     */
-    private String major;
+    @NonNull
+    private Role role;
 }

@@ -3,25 +3,20 @@ package top.mioyi.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import top.mioyi.types.Education;
 
 import java.sql.Date;
 
-/**
- * 职位
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Position {
-    /**
-     * 职位ID
-     */
-    private Integer id;
+    @NonNull
+    private Long id;
 
-    /**
-     * 公司名称(可为分部)
-     */
-    private String detailCompany;
+    @NonNull
+    private Long employerId;
 
     /**
      * 职位名称
@@ -29,9 +24,19 @@ public class Position {
     private String title;
 
     /**
-     * 薪资范围
+     * 公司名称
      */
-    private String salary;
+    private String detailCompany;
+
+    /**
+     * 最低薪资
+     */
+    private Integer minSalary;
+
+    /**
+     * 最高薪资
+     */
+    private Integer maxSalary;
 
     /**
      * 学历要求
@@ -62,9 +67,4 @@ public class Position {
      * 职位链接
      */
     private String link;
-
-    /**
-     * 招聘者ID
-     */
-    private Integer eid;
 }

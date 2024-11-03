@@ -1,5 +1,10 @@
 spring:
   application:
     name: user-service
+  data:
+    redis:
+      username: default
+      password:
+      database: 1
 server:
-  port: 8081
+  port: 8082
