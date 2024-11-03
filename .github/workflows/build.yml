@@ -35,14 +35,23 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: 构建和打包微服务
-        run: |
-          mvn -f commons install
-          mvn -f eureka-server package
-          mvn -f config-server package
-          mvn -f gateway-server package
-          mvn -f user-service package
-          mvn -f auth-service package
+      - name: 安装Commons模块
+        run: mvn -f commons install
+
+      - name: 打包Eureka Server
+        run: mvn -f eureka-server package
+
+      - name: 打包Config Server
+        run: mvn -f config-server package
+
+      - name: 打包Gateway Server
+        run: mvn -f gateway-server package
+
+      - name: 打包User Service
+        run: mvn -f user-service package
+
+      - name: 打包Auth Service
+        run: mvn -f auth-service package
 
       - name: 上传工件
         uses: actions/upload-artifact@v4
