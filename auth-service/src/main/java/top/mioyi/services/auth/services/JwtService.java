@@ -5,7 +5,6 @@ import lombok.val;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
-import top.mioyi.types.Role;
 import top.mioyi.utils.Snowflake;
 
 import java.time.Instant;
@@ -21,13 +20,12 @@ public class JwtService {
     private final JwtTimestampValidator jwtTimestampValidator;
     private final RedisTemplate<String, String> redisTemplateAccount;
 
-    public String generateToken(String account, Role role) {
+    public String generateToken(String account) {
         val now = Instant.now();
 
         val claims = JwtClaimsSet.builder()
                 .id(Long.toString(Snowflake.INSTANCE.nextId()))
                 .claim("account", account)
-                .claim("role", role.name())
                 .issuedAt(now)
                 .expiresAt(now.plus(1, ChronoUnit.DAYS))
                 .build();

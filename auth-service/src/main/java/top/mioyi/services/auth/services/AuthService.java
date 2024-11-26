@@ -41,7 +41,7 @@ public class AuthService {
             return new LoginResponse(null, "密码错误");
         }
 
-        val token = jwtService.generateToken(request.getAccount(), user.getRole());
+        val token = jwtService.generateToken(request.getAccount());
         return new LoginResponse(token, null);
 
     }
@@ -68,7 +68,7 @@ public class AuthService {
             return new SignupResponse(false, null, "无法创建用户: " + response.getMessage());
         }
 
-        val token = jwtService.generateToken(request.getAccount(), request.getRole());
+        val token = jwtService.generateToken(request.getAccount());
 
         return new SignupResponse(true, token, null);
     }

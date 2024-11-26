@@ -17,7 +17,7 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
-    @Cacheable(key = "#account", value = "user", unless = "#result == null")
+    @Cacheable(cacheNames = "user", key = "#account", unless = "#result == null")
     public Optional<UserDTO> getUserByAccount(String account) {
         return userMapper.getUserByAccount(account)
                 .map(UserDTO::new);

@@ -18,6 +18,7 @@
 - config-server: 配置中心
 - gateway-server: 路由
   - 会根据请求所携带的Token分析用户身份，进行权限控制
+  - 为管理员提供OpenAPI（/v3/api-docs/{service-name}）
 - auth-service: 认证服务
   - 使用JWT进行认证
   - 使用Redis保存签发的Token

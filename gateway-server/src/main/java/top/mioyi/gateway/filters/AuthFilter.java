@@ -23,6 +23,7 @@ public class AuthFilter implements GlobalFilter {
         val request = exchange.getRequest();
         val path = request.getURI().getPath();
 
+
         if (path.startsWith("/api/v1/auth")) {
             return chain.filter(exchange);
         }
@@ -38,10 +39,16 @@ public class AuthFilter implements GlobalFilter {
                     return unauthorized(response);
                 }
 
-                val service = ServiceEnum.parseFromPath(path);
+                if (path.startsWith("/v3/api-docs")) {
+                    if (role != Role.ADMIN) {
+                        return unauthorized(response);
+                    }
+                } else {
+                    val service = ServiceEnum.parseFromPath(path);
 
-                if (service.isEmpty() || !service.get().allow(role)) {
-                    return unauthorized(response);
+                    if (service.isEmpty() || !service.get().allow(role)) {
+                        return unauthorized(response);
+                    }
                 }
 
                 return chain.filter(exchange);
