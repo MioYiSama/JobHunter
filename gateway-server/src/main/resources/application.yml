@@ -45,3 +45,11 @@ spring:
             - RewritePath=/v3/api-docs/auth-service, /v3/api-docs
 server:
   port: 8080
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+        - name: Auth Service
+          url: /v3/api-docs/auth-service
+        - name: User Service
+          url: /v3/api-docs/user-service

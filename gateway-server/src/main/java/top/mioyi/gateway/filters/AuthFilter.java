@@ -39,7 +39,7 @@ public class AuthFilter implements GlobalFilter {
                     return unauthorized(response);
                 }
 
-                if (path.startsWith("/v3/api-docs")) {
+                if (path.contains("/v3/api-docs")) {
                     if (role != Role.ADMIN) {
                         return unauthorized(response);
                     }
