@@ -3,6 +3,8 @@ package top.mioyi.utils;
 import java.security.SecureRandom;
 
 public class Snowflake {
+    public static final Snowflake INSTANCE = new Snowflake();
+
     private static final long START_TIMESTAMP = 1672502400000L;
     private static final long SEQUENCE_BIT = 12;
     private static final long WORKER_BIT = 10;

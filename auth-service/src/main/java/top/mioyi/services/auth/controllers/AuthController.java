@@ -3,10 +3,7 @@ package top.mioyi.services.auth.controllers;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.mioyi.requests.auth.LoginRequest;
 import top.mioyi.requests.auth.SignupRequest;
 import top.mioyi.responses.auth.LoginResponse;
@@ -31,9 +28,14 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout() {
-        // TODO
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity<Void> logout(@RequestHeader("Authorization") String authorization) {
+        val result = authService.logout(authorization);
+
+        if (result) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PostMapping("/signup")

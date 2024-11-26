@@ -2,3 +2,8 @@ spring:
   datasource:
     username: job_hunter
     password: ZpFPhM8YSNGiQMGr
+
+  data:
+    redis:
+      username: default
+      password: redis_zZnhwa

@@ -2,9 +2,6 @@ package top.mioyi.gateway.services;
 
 import lombok.AllArgsConstructor;
 import lombok.val;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -18,9 +15,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AuthService {
     private static final String PREFIX = "Bearer ";
-    private static final ParameterizedTypeReference<ResponseEntity<Role>> RESPONSE_ROLE_TYPE =
-            new ParameterizedTypeReference<>() {
-            };
 
     private WebClient.Builder webClientBuilder;
 
@@ -28,15 +22,14 @@ public class AuthService {
         val uri = webClientBuilder.build()
                 .get()
                 .uri(
-                        "lb://auth-service/api/v1/internal/auth/token/resolve?token={token}",
+                        "http://localhost:8081/api/v1/internal/auth/token/resolve?token={token}",
                         Collections.singletonMap("token", token)
                 );
 
         val response = uri.retrieve();
 
-        return response.bodyToMono(RESPONSE_ROLE_TYPE)
-                .onErrorReturn(ResponseEntity.badRequest().body(null))
-                .mapNotNull(HttpEntity::getBody);
+        return response.bodyToMono(Role.class)
+                .onErrorResume(throwable -> Mono.just(Role.UNKNOWN));
     }
 
     public Optional<String> getTokenFromRequest(ServerHttpRequest request) {

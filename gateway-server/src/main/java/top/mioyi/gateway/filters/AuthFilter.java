@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import top.mioyi.gateway.services.AuthService;
+import top.mioyi.types.Role;
 import top.mioyi.types.ServiceEnum;
 
 @Component
@@ -33,7 +34,7 @@ public class AuthFilter implements GlobalFilter {
             val result = authService.resolveToken(token.get());
 
             return result.flatMap(role -> {
-                if (role == null) {
+                if (role == null || role == Role.UNKNOWN) {
                     return unauthorized(response);
                 }
 

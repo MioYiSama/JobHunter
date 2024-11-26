@@ -2,9 +2,7 @@ package top.mioyi.services.auth.services;
 
 import lombok.AllArgsConstructor;
 import lombok.val;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import top.mioyi.dto.UserDTO;
@@ -21,29 +19,31 @@ import java.util.regex.Pattern;
 @Service
 @AllArgsConstructor
 public class AuthService {
+    private static final String PREFIX = "Bearer ";
+
     private final JwtService jwtService;
     private final UserClient userClient;
-    private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final Pattern passwordRegex = Pattern.compile("^(?=.*[A-Za-z])(?=.*[0-9]).+$");
 
     public LoginResponse login(LoginRequest request) {
-        request.setPassword(passwordEncoder.encode(request.getPassword()));
+        val response = userClient.getUserByAccount(request.getAccount());
 
-        try {
-            val authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(request.getAccount(), request.getPassword())
-            );
-
-            if (authentication.isAuthenticated()) {
-                val token = jwtService.generateToken(request.getAccount());
-                return new LoginResponse(token, null);
-            }
-        } catch (AuthenticationException e) {
-            return new LoginResponse(null, "认证失败: " + e.getMessage());
+        if (response.getStatusCode() != HttpStatus.OK) {
+            return new LoginResponse(null, "用户不存在");
         }
 
-        return new LoginResponse(null, "密码错误");
+        @SuppressWarnings("DataFlowIssue")
+        val user = response.getBody().getUser();
+        val password = user.getPassword();
+
+        if (!passwordEncoder.matches(request.getPassword(), password)) {
+            return new LoginResponse(null, "密码错误");
+        }
+
+        val token = jwtService.generateToken(request.getAccount(), user.getRole());
+        return new LoginResponse(token, null);
+
     }
 
     public SignupResponse signup(SignupRequest request) {
@@ -60,7 +60,7 @@ public class AuthService {
         if (!validatePasswordComplexity(request.getPassword()))
             return new SignupResponse(false, null, "密码不够复杂（需长度≥8，同时包含数字和字母）");
 
-        user = new UserDTO(request.getName(), request.getAccount(), passwordEncoder.encode(request.getPassword()), request.getRole());
+        user = new UserDTO(request.getName(), request.getAccount(), request.getPassword(), request.getRole());
 
         val response = Objects.requireNonNull(userClient.createUser(user).getBody());
 
@@ -68,9 +68,19 @@ public class AuthService {
             return new SignupResponse(false, null, "无法创建用户: " + response.getMessage());
         }
 
-        val token = jwtService.generateToken(request.getAccount());
+        val token = jwtService.generateToken(request.getAccount(), request.getRole());
 
         return new SignupResponse(true, token, null);
+    }
+
+    public boolean logout(String header) {
+        if (!header.startsWith(PREFIX)) {
+            return false;
+        }
+
+        val token = header.substring(PREFIX.length());
+
+        return jwtService.invalidateJwt(token);
     }
 
     private boolean validatePasswordComplexity(String password) {

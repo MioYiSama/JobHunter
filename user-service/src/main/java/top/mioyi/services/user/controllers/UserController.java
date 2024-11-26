@@ -16,7 +16,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/")
-    public ResponseEntity<GetUserResponse> getUserByAccount(String account) {
+    public ResponseEntity<GetUserResponse> getUserByAccount(@RequestParam("account") String account) {
         val user = userService.getUserByAccount(account);
 
         //noinspection OptionalIsPresent

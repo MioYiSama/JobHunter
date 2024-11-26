@@ -1,17 +1,13 @@
 meta {
-  name: getUserByAccount
+  name: logout
   type: http
-  seq: 2
+  seq: 3
 }
 
-get {
-  url: http://127.0.0.1:8080/api/v1/user/?account=admin11451
+post {
+  url: http://127.0.0.1:8081/api/v1/auth/logout
   body: none
   auth: bearer
-}
-
-params:query {
-  account: admin11451
 }
 
 auth:bearer {

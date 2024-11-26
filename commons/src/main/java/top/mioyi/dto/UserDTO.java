@@ -13,8 +13,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO implements Serializable {
-    private static final Snowflake SNOWFLAKE = new Snowflake();
-
     private String name;
     private String account;
     private String password;
@@ -28,6 +26,6 @@ public class UserDTO implements Serializable {
     }
 
     public User toUser() {
-        return new User(SNOWFLAKE.nextId(), name, account, password, role);
+        return new User(Snowflake.INSTANCE.nextId(), name, account, password, role);
     }
 }

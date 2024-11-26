@@ -7,8 +7,6 @@ spring:
         enabled: true
   data:
     redis:
-      username: default
-      password:
       database: 0
 server:
   port: 8081

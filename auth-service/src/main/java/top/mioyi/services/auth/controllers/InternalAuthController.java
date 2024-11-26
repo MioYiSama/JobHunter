@@ -31,6 +31,6 @@ public class InternalAuthController {
             }
         }
 
-        return ResponseEntity.badRequest().body(null);
+        return ResponseEntity.badRequest().body(Role.UNKNOWN);
     }
 }
