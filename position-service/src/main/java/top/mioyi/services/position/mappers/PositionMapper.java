@@ -5,6 +5,7 @@ import top.mioyi.entities.Position;
 import top.mioyi.types.Education;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Mapper
@@ -13,7 +14,7 @@ public interface PositionMapper {
     Optional<Position> getPositionByID(Long id);
 
     @Select("SELECT * FROM position WHERE employer_id = #{employerID}")
-    Optional<Position> getPositionByEmployerID(Long employerID);
+    List<Position> getPositionByEmployerID(Long employerID);
 
     @Insert("INSERT INTO position VALUES (#{id}, #{employerId}, #{title}, #{detailCompany}, #{minSalary}, #{maxSalary}, #{education}, #{description}, #{hiringManager}, #{lastActive}, #{address}, #{link})")
     int addPosition(Position position);

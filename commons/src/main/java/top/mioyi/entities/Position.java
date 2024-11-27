@@ -3,7 +3,6 @@ package top.mioyi.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import top.mioyi.types.Education;
 
 import java.sql.Date;
@@ -12,10 +11,14 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Position {
-    @NonNull
+    /**
+     * ID
+     */
     private Long id;
 
-    @NonNull
+    /**
+     * 雇主ID
+     */
     private Long employerId;
 
     /**

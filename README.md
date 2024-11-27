@@ -24,4 +24,7 @@
   - 使用Redis保存签发的Token
 - user-service: 用户服务
   - 使用Redis缓存
+- position-service: 职位无福
+  - 使用Redis缓存
+  - 使用Elasticsearch
 - bruno-api: API调试

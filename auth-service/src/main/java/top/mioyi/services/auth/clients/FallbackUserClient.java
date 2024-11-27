@@ -3,7 +3,7 @@ package top.mioyi.services.auth.clients;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
-import top.mioyi.dto.UserDTO;
+import top.mioyi.requests.user.CreateUserRequest;
 import top.mioyi.responses.OperationResponse;
 import top.mioyi.responses.user.GetUserResponse;
 
@@ -17,7 +17,7 @@ public class FallbackUserClient implements UserClient {
     }
 
     @Override
-    public ResponseEntity<OperationResponse> createUser(UserDTO user) {
+    public ResponseEntity<OperationResponse> createUser(CreateUserRequest user) {
         return ResponseEntity.internalServerError().body(new OperationResponse(false, ERROR_MESSAGE));
     }
 }

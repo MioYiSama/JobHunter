@@ -2,42 +2,42 @@ package top.mioyi.services.position.services;
 
 import lombok.AllArgsConstructor;
 import lombok.val;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import top.mioyi.entities.Position;
+import top.mioyi.dto.PositionDTO;
+import top.mioyi.requests.position.CreatePositionRequest;
 import top.mioyi.responses.OperationResponse;
-import top.mioyi.responses.position.GetPositionResponse;
 import top.mioyi.services.position.mappers.PositionMapper;
 import top.mioyi.types.Education;
 
 import java.sql.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class PositionService {
     private final PositionMapper positionMapper;
 
-    public GetPositionResponse getPositionByID(Long id) {
-        val position = positionMapper.getPositionByID(id);
-
-        if (position.isEmpty()) {
-            return new GetPositionResponse(null, "职位不存在");
-        }
-
-        return new GetPositionResponse(position.get(), null);
+    @Cacheable(cacheNames = "position", key = "#id", unless = "#result.isEmpty()")
+    public Optional<PositionDTO> getPositionByID(Long id) {
+        return positionMapper.getPositionByID(id)
+                .map(PositionDTO::new);
     }
 
-    public GetPositionResponse getPositionByEmployerID(Long employerID) {
-        val position = positionMapper.getPositionByEmployerID(employerID);
-
-        if (position.isEmpty()) {
-            return new GetPositionResponse(null, "职位不存在");
-        }
-
-        return new GetPositionResponse(position.get(), null);
+    @Cacheable(cacheNames = "positionList", key = "#employerID", unless = "#result.empty()")
+    public List<PositionDTO> getPositionByEmployerID(Long employerID) {
+        return positionMapper.getPositionByEmployerID(employerID)
+                .stream()
+                .map(PositionDTO::new)
+                .collect(Collectors.toList());
     }
 
-    public OperationResponse createPosition(Position position) {
-        val result = positionMapper.addPosition(position);
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
+    public OperationResponse createPosition(CreatePositionRequest request) {
+        val result = positionMapper.addPosition(request.getPosition());
 
         if (result == 0) {
             return new OperationResponse(false, "职位创建失败");
@@ -46,6 +46,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse deletePositionByID(Long id) {
         val result = positionMapper.deletePositionByID(id);
 
@@ -56,6 +57,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse updatePositionTitle(Long id, String title) {
         val result = positionMapper.updatePositionTitle(id, title);
 
@@ -66,6 +68,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse updatePositionDetailCompany(Long id, String detailCompany) {
         val result = positionMapper.updatePositionDetailCompany(id, detailCompany);
 
@@ -76,6 +79,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse updatePositionMinSalary(Long id, Integer minSalary) {
         val result = positionMapper.updatePositionMinSalary(id, minSalary);
 
@@ -86,6 +90,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse updatePositionMaxSalary(Long id, Integer maxSalary) {
         val result = positionMapper.updatePositionMaxSalary(id, maxSalary);
 
@@ -96,6 +101,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse updatePositionEducation(Long id, Education education) {
         val result = positionMapper.updatePositionEducation(id, education);
 
@@ -106,6 +112,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"})
     public OperationResponse updatePositionDescription(Long id, String description) {
         val result = positionMapper.updatePositionDescription(id, description);
 
@@ -116,6 +123,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse updatePositionHiringManager(Long id, String hiringManager) {
         val result = positionMapper.updatePositionHiringManager(id, hiringManager);
 
@@ -126,6 +134,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse updatePositionLastActive(Long id, Date lastActive) {
         val result = positionMapper.updatePositionLastActive(id, lastActive);
 
@@ -136,6 +145,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse updatePositionAddress(Long id, String address) {
         val result = positionMapper.updatePositionAddress(id, address);
 
@@ -146,6 +156,7 @@ public class PositionService {
         return OperationResponse.SUCCESS;
     }
 
+    @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse updatePositionLink(Long id, String link) {
         val result = positionMapper.updatePositionLink(id, link);
 

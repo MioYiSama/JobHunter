@@ -5,9 +5,9 @@ import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import top.mioyi.dto.UserDTO;
 import top.mioyi.requests.auth.LoginRequest;
 import top.mioyi.requests.auth.SignupRequest;
+import top.mioyi.requests.user.CreateUserRequest;
 import top.mioyi.responses.auth.LoginResponse;
 import top.mioyi.responses.auth.SignupResponse;
 import top.mioyi.services.auth.clients.UserClient;
@@ -47,7 +47,7 @@ public class AuthService {
     }
 
     public SignupResponse signup(SignupRequest request) {
-        var user = Objects.requireNonNull(userClient.getUserByAccount(request.getAccount()).getBody()).getUser();
+        val user = Objects.requireNonNull(userClient.getUserByAccount(request.getAccount()).getBody()).getUser();
 
         if (user != null) {
             return new SignupResponse(false, null, "账号已存在");
@@ -60,9 +60,9 @@ public class AuthService {
         if (!validatePasswordComplexity(request.getPassword()))
             return new SignupResponse(false, null, "密码不够复杂（需长度≥8，同时包含数字和字母）");
 
-        user = new UserDTO(request.getName(), request.getAccount(), request.getPassword(), request.getRole());
+        val createUserRequest = new CreateUserRequest(request.getName(), request.getAccount(), request.getPassword(), request.getRole());
 
-        val response = Objects.requireNonNull(userClient.createUser(user).getBody());
+        val response = Objects.requireNonNull(userClient.createUser(createUserRequest).getBody());
 
         if (!response.isSuccess()) {
             return new SignupResponse(false, null, "无法创建用户: " + response.getMessage());

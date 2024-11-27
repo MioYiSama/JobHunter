@@ -9,8 +9,9 @@ import lombok.val;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import top.mioyi.entities.Position;
+import top.mioyi.requests.position.CreatePositionRequest;
 import top.mioyi.responses.OperationResponse;
+import top.mioyi.responses.position.GetPositionListResponse;
 import top.mioyi.responses.position.GetPositionResponse;
 import top.mioyi.services.position.services.PositionService;
 import top.mioyi.types.Education;
@@ -31,13 +32,13 @@ public class PositionController {
     })
     @GetMapping("/id")
     public ResponseEntity<GetPositionResponse> getPositionByID(@RequestParam long id) {
-        val response = positionService.getPositionByID(id);
+        val position = positionService.getPositionByID(id);
 
-        if (response.getPosition() == null) {
-            return ResponseEntity.badRequest().body(response);
+        if (position.isEmpty()) {
+            return ResponseEntity.badRequest().body(new GetPositionResponse(null, "职位创建失败"));
         }
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new GetPositionResponse(position.get(), null));
     }
 
     @Operation(description = "根据雇主ID获取职位列表")
@@ -46,14 +47,10 @@ public class PositionController {
             @ApiResponse(responseCode = "400", description = "未找到对应职位")
     })
     @GetMapping("/employer_id")
-    public ResponseEntity<GetPositionResponse> getPositionByEmployerID(@RequestParam long employerID) {
-        val response = positionService.getPositionByEmployerID(employerID);
+    public ResponseEntity<GetPositionListResponse> getPositionByEmployerID(@RequestParam long employerID) {
+        val positionList = positionService.getPositionByEmployerID(employerID);
 
-        if (response.getPosition() == null) {
-            return ResponseEntity.badRequest().body(response);
-        }
-
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(new GetPositionListResponse(positionList, null));
     }
 
     @Operation(description = "创建新的职位")
@@ -62,7 +59,7 @@ public class PositionController {
             @ApiResponse(responseCode = "400", description = "职位创建失败")
     })
     @PostMapping("/")
-    public ResponseEntity<OperationResponse> createPosition(@RequestBody Position position) {
+    public ResponseEntity<OperationResponse> createPosition(@RequestBody CreatePositionRequest position) {
         val response = positionService.createPosition(position);
 
         if (!response.isSuccess()) {

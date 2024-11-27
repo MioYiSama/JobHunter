@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import top.mioyi.dto.UserDTO;
+import top.mioyi.requests.user.CreateUserRequest;
 import top.mioyi.responses.OperationResponse;
 import top.mioyi.responses.user.GetUserResponse;
 import top.mioyi.services.user.services.UserService;
@@ -47,8 +47,8 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "用户创建失败")
     })
     @PostMapping("/")
-    public ResponseEntity<OperationResponse> createUser(@RequestBody UserDTO user) {
-        if (!userService.createUser(user)) {
+    public ResponseEntity<OperationResponse> createUser(@RequestBody CreateUserRequest request) {
+        if (!userService.createUser(request)) {
             return ResponseEntity.badRequest().body(new OperationResponse(false, "用户创建失败"));
         }
 
