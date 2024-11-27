@@ -1,0 +1,28 @@
+meta {
+  name: createPosition
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://127.0.0.1:8083/api/v1/position/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": 1,
+    "employerId": 101,
+    "title": "软件工程师",
+    "detailCompany": "腾讯科技有限公司",
+    "minSalary": 15000,
+    "maxSalary": 30000,
+    "education": "BACHELOR",
+    "description": "负责公司核心系统的设计和开发工作，解决复杂技术问题。",
+    "hiringManager": "张三",
+    "lastActive": "2024-11-26T10:30:00",
+    "address": "深圳市南山区科技园",
+    "link": "https://jobs.tencent.com/software-engineer"
+  }
+}

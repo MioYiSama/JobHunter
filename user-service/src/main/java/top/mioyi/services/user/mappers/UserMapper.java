@@ -13,5 +13,5 @@ public interface UserMapper {
     Optional<User> getUserByAccount(String account);
 
     @Insert("INSERT INTO user VALUES (#{id}, #{name}, #{account}, #{password}, #{role})")
-    int insertUser(User user);
+    int addUser(User user);
 }

@@ -43,6 +43,20 @@ spring:
             - Path=/v3/api-docs/auth-service
           filters:
             - RewritePath=/v3/api-docs/auth-service, /v3/api-docs
+
+        - id: position-service
+          uri: lb://position-service
+          predicates:
+            - name: Path
+              args:
+                pattern: /api/v1/position/**
+
+        - id: position-service-api-docs
+          uri: lb://position-service
+          predicates:
+            - Path=/v3/api-docs/position-service
+          filters:
+            - RewritePath=/v3/api-docs/position-service, /v3/api-docs
 server:
   port: 8080
 springdoc:
@@ -53,3 +67,5 @@ springdoc:
           url: /v3/api-docs/auth-service
         - name: User Service
           url: /v3/api-docs/user-service
+        - name: Position Service
+          url: /v3/api-docs/position-service

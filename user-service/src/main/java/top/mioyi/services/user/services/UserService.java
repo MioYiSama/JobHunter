@@ -27,7 +27,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         try {
-            val result = userMapper.insertUser(user.toUser());
+            val result = userMapper.addUser(user.toUser());
             return result != 0;
         } catch (DuplicateKeyException e) {
             return false;

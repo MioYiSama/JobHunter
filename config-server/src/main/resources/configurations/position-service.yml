@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: position-service
+  data:
+    redis:
+      database: 2
+server:
+  port: 8083

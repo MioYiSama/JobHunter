@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import top.mioyi.dto.UserDTO;
-import top.mioyi.responses.user.CreateUserResponse;
+import top.mioyi.responses.OperationResponse;
 import top.mioyi.responses.user.GetUserResponse;
 
 @Primary
@@ -22,5 +22,5 @@ public interface UserClient {
     ResponseEntity<GetUserResponse> getUserByAccount(@RequestParam("account") String account);
 
     @PostMapping("/")
-    ResponseEntity<CreateUserResponse> createUser(@RequestBody UserDTO user);
+    ResponseEntity<OperationResponse> createUser(@RequestBody UserDTO user);
 }

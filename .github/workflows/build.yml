@@ -47,11 +47,14 @@ jobs:
       - name: 打包Gateway Server
         run: mvn -f gateway-server package
 
+      - name: 打包Auth Service
+        run: mvn -f auth-service package
+
       - name: 打包User Service
         run: mvn -f user-service package
 
-      - name: 打包Auth Service
-        run: mvn -f auth-service package
+      - name: 打包Position Service
+        run: mvn -f position-service package
 
       - name: 上传工件
         uses: actions/upload-artifact@v4
@@ -81,6 +84,13 @@ jobs:
           push: true
           tags: mioyisama/gateway-server:latest
 
+      - name: 上传至Docker - Auth Service
+        uses: docker/build-push-action@v6
+        with:
+          context: auth-service
+          push: true
+          tags: mioyisama/auth-service:latest
+
       - name: 上传至Docker - User Service
         uses: docker/build-push-action@v6
         with:
@@ -88,9 +98,9 @@ jobs:
           push: true
           tags: mioyisama/user-service:latest
 
-      - name: 上传至Docker - Auth Service
+      - name: 上传至Docker - Position Service
         uses: docker/build-push-action@v6
         with:
-          context: auth-service
+          context: position-service
           push: true
-          tags: mioyisama/auth-service:latest
+          tags: mioyisama/position-service:latest

@@ -9,7 +9,7 @@ import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import top.mioyi.dto.UserDTO;
-import top.mioyi.responses.user.CreateUserResponse;
+import top.mioyi.responses.OperationResponse;
 import top.mioyi.responses.user.GetUserResponse;
 import top.mioyi.services.user.services.UserService;
 
@@ -47,11 +47,11 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "用户创建失败")
     })
     @PostMapping("/")
-    public ResponseEntity<CreateUserResponse> createUser(@RequestBody UserDTO user) {
+    public ResponseEntity<OperationResponse> createUser(@RequestBody UserDTO user) {
         if (!userService.createUser(user)) {
-            return ResponseEntity.badRequest().body(new CreateUserResponse(false, "用户创建失败"));
+            return ResponseEntity.badRequest().body(new OperationResponse(false, "用户创建失败"));
         }
 
-        return ResponseEntity.ok(new CreateUserResponse(true, null));
+        return ResponseEntity.ok(OperationResponse.SUCCESS);
     }
 }

@@ -24,7 +24,7 @@ public class AuthFilter implements GlobalFilter {
         val path = request.getURI().getPath();
 
 
-        if (path.startsWith("/api/v1/auth")) {
+        if (path.startsWith("/api/v1/auth") || path.startsWith("/v3/api-docs")) { // TODO: Remove this in production
             return chain.filter(exchange);
         }
 
