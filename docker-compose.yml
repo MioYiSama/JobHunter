@@ -58,6 +58,7 @@ services:
       - config-server
       - mysql
       - redis
+      - rabbitmq
 
   position-service:
     build: position-service

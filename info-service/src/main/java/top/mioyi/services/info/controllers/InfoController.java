@@ -27,7 +27,7 @@ public class InfoController {
             @ApiResponse(responseCode = "400", description = "未找到用户")
     })
     @GetMapping("/user")
-    public ResponseEntity<GetUserInfoResponse> getUserInfo(Long id) {
+    public ResponseEntity<GetUserInfoResponse> getUserInfo(@RequestParam Long id) {
         val info = infoService.getUserInfo(id);
 
         if (info.isEmpty()) {
@@ -43,7 +43,7 @@ public class InfoController {
             @ApiResponse(responseCode = "400", description = "未找到雇员")
     })
     @GetMapping("/employer")
-    public ResponseEntity<GetEmployerInfoResponse> getEmployerInfo(Long id) {
+    public ResponseEntity<GetEmployerInfoResponse> getEmployerInfo(@RequestParam Long id) {
         val info = infoService.getEmployerInfo(id);
 
         if (info.isEmpty()) {
