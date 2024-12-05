@@ -1,12 +1,10 @@
 package top.mioyi.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import top.mioyi.types.Education;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserInfo {

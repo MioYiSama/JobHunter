@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface UserService {
     Optional<UserDTO> getUserByAccount(String account);
 
-    boolean createUser(CreateUserRequest request);
+    Optional<Long> createUser(CreateUserRequest request);
 }

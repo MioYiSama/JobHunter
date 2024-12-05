@@ -22,7 +22,7 @@ public class CreateUserRequest {
     @Schema(description = "密码")
     private String password;
 
-    @Schema(description = "身份（USER或ADMIN）")
+    @Schema(description = "身份（USER或EMPLOYER）")
     private Role role;
 
     public User getUser() {

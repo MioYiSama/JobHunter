@@ -12,4 +12,6 @@ import top.mioyi.services.favorite.services.FavoriteService;
 @Tag(name = "Favorite Controller", description = "用户收藏API")
 public class FavoriteController {
     private final FavoriteService favoriteService;
+
+
 }

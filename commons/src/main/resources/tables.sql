@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS user_info
     user_id             BIGINT UNSIGNED UNIQUE                NOT NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES user (id),
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
 
     birth_year          SMALLINT UNSIGNED                     NULL DEFAULT NULL COMMENT '出生年份',
     min_expected_salary INT UNSIGNED                          NULL DEFAULT NULL COMMENT '最低期望工资',
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS employer_info
     employer_id BIGINT UNSIGNED UNIQUE NOT NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (employer_id) REFERENCES user (id),
+    FOREIGN KEY (employer_id) REFERENCES user (id) ON DELETE CASCADE,
 
     company     VARCHAR(64)            NULL DEFAULT NULL COMMENT '公司名称',
 

@@ -18,6 +18,7 @@
   - 使用 Redis 保存签发的 Token
 - user-service: 用户服务
   - 使用 Redis 缓存
+  - 使用 RabbitMQ 同步创建用户信息
 - position-service: 职位服务
   - 使用 Redis 缓存
   - 使用 RabbitMQ 同步ES中的数据

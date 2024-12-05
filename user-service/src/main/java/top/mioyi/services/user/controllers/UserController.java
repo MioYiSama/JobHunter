@@ -18,7 +18,7 @@ import top.mioyi.services.user.services.UserService;
 @AllArgsConstructor
 @Tag(name = "User Controller", description = "用户管理API")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
 
     @Operation(
             description = "通过账号获取用户"
@@ -48,7 +48,9 @@ public class UserController {
     })
     @PostMapping("/")
     public ResponseEntity<OperationResponse> createUser(@RequestBody CreateUserRequest request) {
-        if (!userService.createUser(request)) {
+        val result = userService.createUser(request);
+
+        if (result.isEmpty()) {
             return ResponseEntity.badRequest().body(new OperationResponse(false, "用户创建失败"));
         }
 
