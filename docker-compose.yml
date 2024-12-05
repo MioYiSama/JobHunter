@@ -1,0 +1,103 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  elasticsearch:
+    image: elasticsearch
+    ports:
+      - "9200:9200"
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - "5672:5672"
+
+  eureka-server:
+    build: eureka-server
+    ports:
+      - "8761:8761"
+
+  config-server:
+    build: config-server
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka-server
+
+  gateway-server:
+    build: gateway-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka-server
+
+  auth-service:
+    build: auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-server
+      - config-server
+      - mysql
+      - redis
+
+  user-service:
+    build: user-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-server
+      - config-server
+      - mysql
+      - redis
+
+  position-service:
+    build: position-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - eureka-server
+      - config-server
+      - mysql
+      - redis
+
+  favorite-service:
+    build: favorite-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+      - config-server
+      - mysql
+      - redis
+
+  info-service:
+    build: info-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      - eureka-server
+      - config-server
+      - mysql
+      - redis
+      - rabbitmq
+
+  search-service:
+    build: search-service
+    ports:
+      - "8086:8086"
+    depends_on:
+      - eureka-server
+      - config-server
+      - mysql
+      - redis
+      - elasticsearch
+      - rabbitmq

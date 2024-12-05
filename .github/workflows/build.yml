@@ -56,6 +56,15 @@ jobs:
       - name: 打包Position Service
         run: mvn -f position-service package
 
+      - name: 打包Favorite Service
+        run: mvn -f favorite-service package
+
+      - name: 打包Info Service
+        run: mvn -f info-service package
+
+      - name: 打包Search Service
+        run: mvn -f search-service package
+
       - name: 上传工件
         uses: actions/upload-artifact@v4
         with:
@@ -104,3 +113,24 @@ jobs:
           context: position-service
           push: true
           tags: mioyisama/position-service:latest
+
+      - name: 上传至Docker - Favorite Service
+        uses: docker/build-push-action@v6
+        with:
+          context: favorite-service
+          push: true
+          tags: mioyisama/favorite-service:latest
+
+      - name: 上传至Docker - Info Service
+        uses: docker/build-push-action@v6
+        with:
+          context: info-service
+          push: true
+          tags: mioyisama/info-service:latest
+
+      - name: 上传至Docker - Search Service
+        uses: docker/build-push-action@v6
+        with:
+          context: search-service
+          push: true
+          tags: mioyisama/search-service:latest

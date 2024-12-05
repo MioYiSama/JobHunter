@@ -31,6 +31,14 @@
 
 ## 运行
 
+### Docker Compose
+
+```bash
+docker-compose up -d --build
+```
+
+### 本地
+
 启动顺序：
 1. eureka-server（端口：8761）
 2. config-server（端口：8888）
