@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    config:
+      name: info-service
+      uri: http://localhost:8888
+      profile: dev

@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: info-service
+  data:
+    redis:
+      database: 4
+server:
+  port: 8086

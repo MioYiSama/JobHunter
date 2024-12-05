@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: search-service
+  data:
+    redis:
+      database: 3
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  elasticsearch:
+    uris: http://localhost:9200
+    username: elastic
+    password: changeme
+server:
+  port: 8085
