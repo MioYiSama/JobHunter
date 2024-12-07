@@ -7,6 +7,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import top.mioyi.dto.UserDTO;
+import top.mioyi.messages.CreateInfoMessage;
 import top.mioyi.requests.user.CreateUserRequest;
 import top.mioyi.services.user.mappers.UserMapper;
 import top.mioyi.services.user.services.RabbitMQSender;
@@ -41,7 +42,7 @@ public class UserServiceImpl implements UserService {
                 return Optional.empty();
             }
 
-            rabbitMQSender.sendMessage(String.format("%s;%d", request.getRole().name(), user.getId()));
+            rabbitMQSender.sendMessage(new CreateInfoMessage(user.getRole(), user.getId()));
             return Optional.of(user.getId());
         } catch (DuplicateKeyException e) {
             return Optional.empty();

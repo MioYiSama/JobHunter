@@ -2,7 +2,11 @@
 
 ## 简介
 
+> 2024 择栖工作室 二轮招新 第四题
+
 基于Spring Cloud开发的完整后端项目
+
+https://github.com/mioyisama/jobhunter
 
 ## 模块介绍
 
@@ -32,15 +36,15 @@
 
 ## 运行
 
-### Docker Compose
+### 方法一：Docker Compose
 
 ```bash
 docker-compose up -d --build
 ```
 
-### 本地
+### 方法二：本地运行
 
-启动顺序：
+按以下顺序运行各个服务：
 1. eureka-server（端口：8761）
 2. config-server（端口：8888）
 3. gateway-server（端口：8080）

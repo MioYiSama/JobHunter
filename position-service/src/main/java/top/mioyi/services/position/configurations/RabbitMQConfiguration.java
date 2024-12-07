@@ -1,4 +1,4 @@
-package top.mioyi.services.user.configurations;
+package top.mioyi.services.position.configurations;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -27,12 +27,12 @@ public class RabbitMQConfiguration {
 
     @Bean
     public Queue queue() {
-        return new Queue(RabbitMQConstants.INFO_QUEUE_NAME, true);
+        return new Queue(RabbitMQConstants.SEARCH_QUEUE_NAME, true);
     }
 
     @Bean
     public DirectExchange exchange() {
-        return new DirectExchange(RabbitMQConstants.INFO_EXCHANGE_NAME);
+        return new DirectExchange(RabbitMQConstants.SEARCH_EXCHANGE_NAME);
     }
 
     @Bean

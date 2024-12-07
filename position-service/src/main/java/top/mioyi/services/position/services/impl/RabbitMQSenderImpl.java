@@ -1,10 +1,10 @@
-package top.mioyi.services.user.services.impl;
+package top.mioyi.services.position.services.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
-import top.mioyi.messages.CreateInfoMessage;
-import top.mioyi.services.user.services.RabbitMQSender;
+import top.mioyi.entities.Position;
+import top.mioyi.services.position.services.RabbitMQSender;
 import top.mioyi.utils.RabbitMQConstants;
 
 @Service
@@ -13,11 +13,11 @@ public class RabbitMQSenderImpl implements RabbitMQSender {
     private final RabbitTemplate rabbitTemplate;
 
     @Override
-    public void sendMessage(CreateInfoMessage message) {
+    public void sendMessage(Position position) {
         rabbitTemplate.convertAndSend(
-                RabbitMQConstants.INFO_EXCHANGE_NAME,
+                RabbitMQConstants.SEARCH_QUEUE_NAME,
                 RabbitMQConstants.ROUTING_KEY,
-                message
+                position
         );
     }
 }

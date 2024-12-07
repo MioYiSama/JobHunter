@@ -1,14 +1,13 @@
 package top.mioyi.services.info.services.impl;
 
 import lombok.AllArgsConstructor;
-import lombok.val;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import top.mioyi.entities.EmployerInfo;
 import top.mioyi.entities.UserInfo;
+import top.mioyi.messages.CreateInfoMessage;
 import top.mioyi.services.info.mappers.InfoMapper;
 import top.mioyi.services.info.services.RabbitMQListener;
-import top.mioyi.types.Role;
 import top.mioyi.utils.RabbitMQConstants;
 import top.mioyi.utils.Snowflake;
 
@@ -19,17 +18,13 @@ public class RabbitMQListenerImpl implements RabbitMQListener {
 
     @Override
     @RabbitListener(queues = RabbitMQConstants.INFO_QUEUE_NAME)
-    public void handleMessage(String message) {
-        val data = message.split(";");
-        val role = Role.valueOf(data[0]);
-        val id = Long.parseLong(data[1]);
-
-        switch (role) {
+    public void handleMessage(CreateInfoMessage message) {
+        switch (message.getRole()) {
             case USER:
-                infoMapper.insertUserInfo(UserInfo.builder().id(Snowflake.INSTANCE.nextId()).userId(id).build());
+                infoMapper.insertUserInfo(UserInfo.builder().id(Snowflake.INSTANCE.nextId()).userId(message.getUserId()).build());
                 break;
             case EMPLOYER:
-                infoMapper.insertEmployerInfo(EmployerInfo.builder().id(Snowflake.INSTANCE.nextId()).employerId(id).build());
+                infoMapper.insertEmployerInfo(EmployerInfo.builder().id(Snowflake.INSTANCE.nextId()).employerId(message.getUserId()).build());
                 break;
         }
     }

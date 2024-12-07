@@ -50,7 +50,8 @@ public class CreatePositionRequest {
     private String link;
 
     public Position getPosition() {
-        return new Position(Snowflake.INSTANCE.nextId(),
+        return new Position(
+                Snowflake.INSTANCE.nextId(),
                 employerId,
                 title,
                 detailCompany,
@@ -61,6 +62,7 @@ public class CreatePositionRequest {
                 hiringManager,
                 lastActive,
                 address,
-                link);
+                link
+        );
     }
 }

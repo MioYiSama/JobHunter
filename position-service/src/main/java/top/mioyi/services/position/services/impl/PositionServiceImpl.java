@@ -10,6 +10,7 @@ import top.mioyi.requests.position.CreatePositionRequest;
 import top.mioyi.responses.OperationResponse;
 import top.mioyi.services.position.mappers.PositionMapper;
 import top.mioyi.services.position.services.PositionService;
+import top.mioyi.services.position.services.RabbitMQSender;
 import top.mioyi.types.Education;
 
 import java.sql.Date;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class PositionServiceImpl implements PositionService {
     private final PositionMapper positionMapper;
+    private final RabbitMQSender rabbitMQSender;
 
     @Override
     @Cacheable(cacheNames = "position", key = "#id", unless = "#result.isEmpty()")
@@ -41,12 +43,14 @@ public class PositionServiceImpl implements PositionService {
     @Override
     @CacheEvict(cacheNames = {"position", "positionList"}, condition = "#result.success")
     public OperationResponse createPosition(CreatePositionRequest request) {
-        val result = positionMapper.addPosition(request.getPosition());
+        val position = request.getPosition();
+        val result = positionMapper.addPosition(position);
 
         if (result == 0) {
             return new OperationResponse(false, "职位创建失败");
         }
 
+        rabbitMQSender.sendMessage(position);
         return OperationResponse.SUCCESS;
     }
 
